@@ -1,0 +1,10 @@
+
+.navbar {
+  background: var(--Grad-Pri, linear-gradient(180deg, #8482FF 0%, #3637AD 100%));
+}
+
+.sol-input {
+  border-bottom-style: dashed;
+  border-bottom-color: white;
+  border-bottom-width: 2px;
+}

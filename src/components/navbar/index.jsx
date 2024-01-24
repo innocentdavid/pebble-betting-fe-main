@@ -1,8 +1,12 @@
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+// import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { Button } from "@material-tailwind/react";
 import { useRouter } from "../../hooks/use-router";
+import { Link } from "react-router-dom";
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const Navbar = () => {
   const router = useRouter();
+  const wallet = useWallet();
 
   const getProvider = () => {
     if ('phantom' in window) {
@@ -28,19 +32,65 @@ const Navbar = () => {
     }
   }
 
+  const toBetting = () => {
+    if (wallet.connected) {
+      router.push('/bet');
+    }
+    else {
+      alert("Wallet is not connected!\n Please Connect your wallet!");
+      return;
+    }
+  }
+
+  const toHamster = () => {
+    if (wallet.connected) {
+      router.push('/harybet');
+    }
+    else {
+      alert("Wallet is not connected!\n Please Connect your wallet!");
+      return;
+    }
+  }
+
 
   return (
-    <div className="bg-gradient-to-t from-[#433466] to-[#231B4A] flex flex-col py-5 px-8 items-center h-full w-[280px]" >
-      <WalletMultiButton />
-      <img src="/images/logo.png" width={105} height={31} className="mt-2"></img>
-      
+    <div className="pt-5 bg-gradient-to-t from-[#433466] to-[#231B4A] flex flex-col items-center h-full w-[280px]" >
+      {/* <WalletMultiButton /> */}
+      <img src="/images/logo.png" width={105} height={31} className="mt-2" />
+
       <div className="rounded-[8px] bg-[#150C2A] gap-1 px-5 py-2 flex flex-row mt-10">
         <img src="/images/token-icon.svg" width={24} height={24}></img>
         <p className="text-white">1 GYPR - 0.3$</p>
       </div>
-      <button className="rounded-[8px] bg-[#150C2A] mt-3 px-12 py-2 text-[#4EAF90]" onClick={connectWallet}>Buy Token</button>
+      <Button className="rounded-[8px] bg-[#150C2A] mt-3 px-12 pt-3 pb-[14px] border border-[#4EAF90] capitalize text-base text-[#4EAF90]" onClick={connectWallet}>Buy Token</Button>
 
-      <div className="w-full mt-10">
+      <div className="mt-10 px-8">
+        <p className="text-white">Live Matches</p>
+        <div className="w-full mr-10 flex flex-col dflex-row gap-3 mt-5">
+          <Link to={'/bet'}>
+            <img src="/images/match1.png" style={{ width: '119px', height: '125px' }} onClick={toBetting} className="cursor-pointer" />
+          </Link>
+          <Link to={'/harybet'}>
+            <img src="/images/match2.png" style={{ width: '119px', height: '125px' }} onClick={toHamster} className="cursor-pointer" />
+          </Link>
+          {/* <img src="/images/match3.png" style={{width: '119px', height: '125px'}}/>
+            <img src="/images/match4.png" style={{width: '119px', height: '125px'}}/>
+            <img src="/images/match5.png" style={{width: '119px', height: '125px'}}/>
+            <img src="/images/match6.png" style={{width: '119px', height: '125px'}}/>
+            <img src="/images/match7.png" style={{width: '119px', height: '125px'}}/>
+            <img src="/images/match8.png" style={{width: '119px', height: '125px'}}/> */}
+        </div>
+        <div className="">
+
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 pt-3 pb-6 px-8 backdrop-blur-sm bg-white/5 w-[calc(280px-60px)]">
+        <Button className="w-full text-black mb-3 capitalize text-base bg-primary-gradient">Buy Crypto</Button>
+        <img src="/images/credit_cards.svg" onClick={toBetting} className="cursor-pointer" />
+      </div>
+
+      <div className="hidden w-full mt-10">
         <div className="flex flex-row w-full justify-between cursor-pointer">
           <div className="flex flex-row justify-center items-center">
             <img src="/images/live_stream.png" style={{ width: '22px', height: '22px' }} />

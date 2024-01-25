@@ -1,5 +1,7 @@
 // import axios from "axios";
+import { Button } from "@material-tailwind/react";
 import { useEffect, useRef, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import io from "socket.io-client";
 
 const socket = io.connect(
@@ -104,6 +106,16 @@ export default function LiveChat() {
     return (
       <>
         <div className="bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[12px] py-[calc(65px+20px)] px-4 xl:min-w-[329px] xl:max-w-[329px] w-full relative min-h-[calc(100vh-110px)]">
+          {/* <div className="absolute -top-4 -left-2 z-[9999]">
+            <Button className="w-fit h-fit p-3" size="sm" onClick={()=>{
+              let el = document.querySelector('#livechat');
+              if(el){
+                el.classList.add('hidden')
+              }
+            }}>
+              <FaTimes />
+            </Button>
+          </div> */}
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
             <h1 className="text-[20px] font-[500] select-none">Live Chat</h1>
             <div className="flex items-center gap-2 select-none">
@@ -131,11 +143,11 @@ export default function LiveChat() {
           <div
             id="body"
             ref={messagesColumnRef}
-            className="flex flex-col gap-3 max-h-[310px] overflow-auto remove-scroll"
+            className="flex flex-col gap-3 max-h-[420px] overflow-auto remove-scroll"
           >
             {messagesRecieved.map((message, i) => {
-              // console.log("message");
-              // console.log(message);
+              const colors = ["#00ff00", "#F2C94C", "#EB5757", "#BF2FED"];
+              const colorIndex = i % colors.length;
 
               if (message?.username) {
                 return (
@@ -143,7 +155,15 @@ export default function LiveChat() {
                     key={`message_${i}`}
                     className="bg-[#0c031f] rounded-[6px] py-2 px-2"
                   >
-                    <span className="font-bold">@{message.username}:</span>{" "}
+                    <span
+                      className="font-bold py-1 px-2 rounded-md"
+                      style={{
+                        backgroundColor: `${colors[colorIndex]}50`,
+                        color: `${colors[colorIndex]}`,
+                      }}
+                    >
+                      @{message.username}
+                    </span>{" "}
                     {message.message}
                   </div>
                 );
@@ -210,30 +230,27 @@ export default function LiveChat() {
           </div>
 
           <div className="flex flex-col gap-3 max-h-[370px] overflow-auto remove-scroll">
-            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
-              <div className="">HWEO<sub className="text-lg">***</sub></div>
-              <div className="">23854</div>
-            </div>
-            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
-              <div className="">HWEO<sub className="text-lg">***</sub></div>
-              <div className="">23854</div>
-            </div>
-            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
-              <div className="">HWEO<sub className="text-lg">***</sub></div>
-              <div className="">23854</div>
-            </div>
-            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
-              <div className="">HWEO<sub className="text-lg">***</sub></div>
-              <div className="">23854</div>
-            </div>
-            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
-              <div className="">HWEO<sub className="text-lg">***</sub></div>
-              <div className="">23854</div>
-            </div>
-            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
-              <div className="">HWEO<sub className="text-lg">***</sub></div>
-              <div className="">23854</div>
-            </div>
+            {Array.from({ length: 7 }, (_, index) => {
+              const colors = ["#00ff00", "#F2C94C", "#EB5757", "#BF2FED"];
+              const colorIndex = index % colors.length;
+              return (
+                <div
+                  key={`recent_-${index}`}
+                  className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between"
+                >
+                  <div
+                    className="rounded-[6px] py-1 px-3"
+                    style={{
+                      backgroundColor: `${colors[colorIndex]}50`,
+                      color: `${colors[colorIndex]}`,
+                    }}
+                  >
+                    HWEO<sub className="text-lg">***</sub>
+                  </div>
+                  <div className="">23854</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </>

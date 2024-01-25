@@ -11,6 +11,10 @@ import ReactTwitchEmbedVideo from "react-twitch-embed-video";
 import { useRouter } from "../hooks/use-router";
 import { transferSol } from "../contract/bean";
 import LiveChat from "../components/LiveChat/LiveChat";
+import { Button } from "@material-tailwind/react";
+import { FaTimes } from "react-icons/fa";
+import { MdOutlineMarkUnreadChatAlt } from "react-icons/md";
+import axios from "axios";
 
 const MARBLES = [
   {
@@ -68,7 +72,7 @@ const HEMSTARS = [
     icon: "/icons/hem_red.png",
     name: "Luna",
     color: "#CB031A",
-    winner: false,
+    winner: true,
   },
   {
     icon: "/icons/hem_green.png",
@@ -81,7 +85,7 @@ const HEMSTARS = [
     icon: "/icons/hem_blue.png",
     name: "Peanut",
     color: "#04E6EA",
-    winner: true,
+    winner: false,
   },
   {
     // id: 4,
@@ -114,8 +118,32 @@ const Match = () => {
   const [isTokyo, onTokyoOrder] = useState(1);
 
   const [selectedStat, setSelectedStat] = useState(HEMSTARS[0]);
+  const [statDetails, setStatDetails] = useState(null);
   const channel = "bobbypoffgaming";
   const [itemsList, setItemsList] = useState([]);
+  const [showRightSideBar, setShowRightSideBar] = useState(true);
+
+  useEffect(() => {
+    if (!selectedStat) return;
+
+    const fetch = async () => {
+      const url = "";
+      try {
+        const res = await axios.post(url, {
+          name: selectedStat.name,
+        });
+        if (res) {
+          console.log(res.data);
+          setStatDetails(res.data);
+        }
+      } catch (error) {
+        console.log(error.message);
+        console.log(error);
+        console.log(error.message);
+      }
+    };
+    fetch();
+  }, [selectedStat]);
 
   useEffect(() => {
     if (matchId === "bet") {
@@ -127,40 +155,43 @@ const Match = () => {
     }
   }, [matchId]);
 
-  const initSetting = () => {
-    fetch("https://coingateapi.com/api/init")
-      .then((response) => response.text())
-      .then((data) => {
-        // Do something with the response data
-        console.log(data);
-        const data_t = JSON.parse(data);
-        console.log(data_t.msg.bettingFlag);
-        const bettingFlag = data_t.msg.bettingFlag;
-        const last_sequence = data_t.msg.last_vetting_result;
-        console.log(last_sequence[5]);
-        onMoscowOrder(last_sequence[0]);
-        onNewYorkOrder(last_sequence[1]);
-        onParisOrder(last_sequence[2]);
-        onCapeTownOrder(last_sequence[3]);
-        onRiodeJaneiroOrder(last_sequence[4]);
-        onSydneyOrder(last_sequence[5]);
-        onCairoOrder(last_sequence[6]);
-        onTokyoOrder(last_sequence[7]);
-        setOnBetting(bettingFlag);
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.error(error);
-      });
-  };
-
   useEffect(() => {
     console.log(matchId);
   }, [matchId]);
 
   useEffect(() => {
+    const initSetting = () => {
+      const url = `https://coingateapi.com/api/init/${matchId}`;
+      fetch(url)
+        .then((response) => response.text())
+        .then((data) => {
+          // Do something with the response data
+          console.log(data);
+          const data_t = JSON.parse(data);
+          console.log(data_t);
+          console.log(data_t.msg.bettingFlag);
+          const bettingFlag = data_t.msg.bettingFlag;
+          const last_sequence = data_t.msg.last_vetting_result;
+          // const newList =
+          console.log(last_sequence[5]);
+          onMoscowOrder(last_sequence[0]);
+          onNewYorkOrder(last_sequence[1]);
+          onParisOrder(last_sequence[2]);
+          onCapeTownOrder(last_sequence[3]);
+          onRiodeJaneiroOrder(last_sequence[4]);
+          onSydneyOrder(last_sequence[5]);
+          onCairoOrder(last_sequence[6]);
+          onTokyoOrder(last_sequence[7]);
+          setOnBetting(bettingFlag);
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error);
+        });
+    };
+    
     initSetting();
-  }, []);
+  }, [matchId]);
 
   const PEBBLE_RACE = 8;
   //   let lamportBalance = 10;
@@ -496,6 +527,22 @@ const Match = () => {
       </header>
 
       <section className="flex gap-5 flex-col-reverse lg:flex-row justify-between mt-5 md:h-[calc(100vh-60px)] md:overflow-hidden">
+        <div className="absolute top-[100px] right-1 z-[9999]">
+          <Button
+            className="w-fit h-fit p-3"
+            size="sm"
+            onClick={() => {
+              setShowRightSideBar(!showRightSideBar);
+            }}
+          >
+            {showRightSideBar ? (
+              <FaTimes />
+            ) : (
+              <MdOutlineMarkUnreadChatAlt fill="green" size={18} />
+            )}
+          </Button>
+        </div>
+
         <aside className="lg:h-[calc(100vh-100px)] overflow-auto remove-scroll pb-4 md:min-w-[330px] w-full lg:max-w-[330px] mx-auto lg:mx-0">
           <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
             <div className="flex flex-row justify-between">
@@ -743,11 +790,18 @@ const Match = () => {
                 <div className="mt-10 flex flex-row items-center justify-center gap-3">
                   <div className="h-[1px] bg-white w-16"></div>
                   <p className="text-white">Detailed Stat</p>
+                  <p className="text-xs text-red-600">
+                    {!statDetails && "failed to fetch details"}
+                  </p>
                   <div className="h-[1px] bg-white w-16"></div>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 mt-6">
-                <img src={selectedStat.icon} alt="" className="w-[60px] h-auto" />
+                  <img
+                    src={selectedStat.icon}
+                    alt=""
+                    className="w-[60px] h-auto"
+                  />
                   {/* <img
                     src={
                       matchId === "bet"
@@ -951,11 +1005,11 @@ const Match = () => {
                   )}
                 </div>
 
-                <div className="w-[2px] bg-[#A2A1E5] mx-10 my-5"></div>
+                <div className="w-[2px] bg-[#A2A1E5] ml-2 mr-4 my-5"></div>
 
                 <div className="flex flex-col md:w-1/2">
                   <p className="text-white">Enter your bet</p>
-                  <div className="flex justify-between flex-row mt-2">
+                  <div className="flex justify-between flex-row my-2">
                     <div className="flex flex-row justify-center gap-2 items-center sol-input">
                       <div className="rounded-full bg-black p-1 h-fit">
                         <img
@@ -972,38 +1026,43 @@ const Match = () => {
                       <p className="font-bold text-md text-white">sol</p>
                     </div>
 
-                    <div className="bg-white rounded-[16px] flex flex-row p-3 gap-3 md:ml-10 ml-5">
+                    <div className="bg-white rounded-[16px] flex flex-row p-3 gap-3">
                       <img
                         onClick={onClickPlus}
-                        className="cursor-pointer"
+                        className="cursor-pointer min-w-[24px]"
                         src="/images/ic_round-plus.png"
                         style={{ width: "24px", height: "24px" }}
                       ></img>
                       <img
                         onClick={onClickMinus}
-                        className="cursor-pointer"
+                        className="cursor-pointer min-w-[24px]"
                         src="/images/ph_minus-bold.svg"
                         style={{ width: "24px", height: "24px" }}
                       ></img>
                     </div>
                   </div>
 
-                  <div className="flex justify-between flex-row mt-2 items-center">
-                    <img
-                      src="/images/ion_wallet.png"
-                      style={{ width: "30px", height: "30px" }}
-                    ></img>
-                    <div className="flex flex-col mx-2">
-                      <p className="text-sm text-white">Your balance</p>
-                      <p className="text-white">Wallet</p>
+                  <div className="flex justify-between flex-row mt-2 items-center flex-wrap gap-2">
+                    <div className="flex items-center">
+                      <img
+                        src="/images/ion_wallet.png"
+                        style={{ width: "24px", height: "24px" }}
+                      ></img>
+                      <div className="flex flex-col mx-2 text-xs">
+                        <p className="text-white">Your balance</p>
+                        <p className="text-white">Wallet</p>
+                      </div>
                     </div>
 
-                    <div className="bg-black rounded-[16px] flex flex-row p-3 gap-1 ml-10 items-center">
+                    <div className="bg-black rounded-[16px] flex flex-row p-3 gap-1 items-center">
                       <img
                         src="/images/solana.png"
                         style={{ width: "36px", height: "20px" }}
                       ></img>
-                      <p className="font-bold text-white">{walletBalance}</p>
+                      <p className="font-bold text-white">
+                        {/* 3.4331214344 */}
+                        {walletBalance}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1048,107 +1107,109 @@ const Match = () => {
             <br />
           </main>
 
-          <aside className="xl:min-w-[329px] xl:max-w-[329px]">
-            {isAdmin === true ? (
-              <div className="flex flex-col ml-5">
-                <button
-                  disabled={!onBetting ? false : true}
-                  onClick={bettingStart}
-                  className={clsx(
-                    "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                    !onBetting ? "to-[#B2D5B2]" : "bg-black"
-                  )}
-                >
-                  Start
-                </button>
-                <button
-                  disabled={!onBetting}
-                  onClick={bettingEnd}
-                  className={clsx(
-                    "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                    onBetting ? "to-[#B2D5B2]" : "bg-black"
-                  )}
-                >
-                  End
-                </button>
-                <button
-                  disabled={!onBetting}
-                  onClick={getExpectWinner}
-                  className={clsx(
-                    "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90] ",
-                    onBetting ? "to-[#B2D5B2]" : "bg-black"
-                  )}
-                >
-                  Expect Winner
-                </button>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={expectWinner}
-                  onChange={onSelectWinner}
-                ></input>
-                <button
-                  disabled={!onBetting}
-                  onClick={decideWinner}
-                  className={clsx(
-                    "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90] ",
-                    onBetting ? "to-[#B2D5B2]" : "bg-black"
-                  )}
-                >
-                  Decide Winner
-                </button>
-                <p className="text-white">Moscow</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isMoscow}
-                  onChange={onMoscowOrderSet}
-                ></input>
-                <p className="text-white">New York</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isNewYork}
-                  onChange={onNewYorkOrderSet}
-                ></input>
-                <p className="text-white">Paris</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isParis}
-                  onChange={onParisOrderSet}
-                ></input>
-                <p className="text-white">Cape Town</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isCapeTown}
-                  onChange={onCapeTownOrderSet}
-                ></input>
-                <p className="text-white">Rio de Janeiro</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isRiodeJaneiro}
-                  onChange={onRiodeJaneiroOrderSet}
-                ></input>
-                <p className="text-white">Sydney</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isSydney}
-                  onChange={onSydneyOrderSet}
-                ></input>
-                <p className="text-white">Cairo</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isCairo}
-                  onChange={onCairoOrderSet}
-                ></input>
-                <p className="text-white">Tokyo</p>
-                <input
-                  className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
-                  value={isTokyo}
-                  onChange={onTokyoOrderSet}
-                ></input>
-              </div>
-            ) : (
-              <LiveChat />
-            )}
-          </aside>
+          {showRightSideBar && (
+            <aside className="xl:min-w-[329px] xl:max-w-[329px]">
+              {isAdmin === true ? (
+                <div className="flex flex-col ml-5">
+                  <button
+                    disabled={!onBetting ? false : true}
+                    onClick={bettingStart}
+                    className={clsx(
+                      "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                      !onBetting ? "to-[#B2D5B2]" : "bg-black"
+                    )}
+                  >
+                    Start
+                  </button>
+                  <button
+                    disabled={!onBetting}
+                    onClick={bettingEnd}
+                    className={clsx(
+                      "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                      onBetting ? "to-[#B2D5B2]" : "bg-black"
+                    )}
+                  >
+                    End
+                  </button>
+                  <button
+                    disabled={!onBetting}
+                    onClick={getExpectWinner}
+                    className={clsx(
+                      "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90] ",
+                      onBetting ? "to-[#B2D5B2]" : "bg-black"
+                    )}
+                  >
+                    Expect Winner
+                  </button>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={expectWinner}
+                    onChange={onSelectWinner}
+                  ></input>
+                  <button
+                    disabled={!onBetting}
+                    onClick={decideWinner}
+                    className={clsx(
+                      "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90] ",
+                      onBetting ? "to-[#B2D5B2]" : "bg-black"
+                    )}
+                  >
+                    Decide Winner
+                  </button>
+                  <p className="text-white">Moscow</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isMoscow}
+                    onChange={onMoscowOrderSet}
+                  ></input>
+                  <p className="text-white">New York</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isNewYork}
+                    onChange={onNewYorkOrderSet}
+                  ></input>
+                  <p className="text-white">Paris</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isParis}
+                    onChange={onParisOrderSet}
+                  ></input>
+                  <p className="text-white">Cape Town</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isCapeTown}
+                    onChange={onCapeTownOrderSet}
+                  ></input>
+                  <p className="text-white">Rio de Janeiro</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isRiodeJaneiro}
+                    onChange={onRiodeJaneiroOrderSet}
+                  ></input>
+                  <p className="text-white">Sydney</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isSydney}
+                    onChange={onSydneyOrderSet}
+                  ></input>
+                  <p className="text-white">Cairo</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isCairo}
+                    onChange={onCairoOrderSet}
+                  ></input>
+                  <p className="text-white">Tokyo</p>
+                  <input
+                    className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                    value={isTokyo}
+                    onChange={onTokyoOrderSet}
+                  ></input>
+                </div>
+              ) : (
+                <LiveChat />
+              )}
+            </aside>
+          )}
         </div>
       </section>
     </div>

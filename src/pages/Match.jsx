@@ -401,7 +401,7 @@ const Match = () => {
   };
 
   return (
-    <div className="flex flex-col w-full dh-full xl:p-10 p-5 lg:p-7 !pb-0 bg-gradient-to-bl from-[#0B021D] to-[#261A32] h-screen">
+    <div className="flex flex-col w-full dh-full xl:p-10 p-5 lg:p-7 !pb-0 bg-gradient-to-bl from-[#0B021D] to-[#261A32] lg:h-screen">
       <header className="flex justify-between items-center h-[50px]">
         <div
           className="flex flex-row justify-center items-center cursor-pointer bg-[#383838] h-fit md:h-full py-3 md:px-5 px-3 gap-3 rounded-[12px] border-solid border-[1px] border-[#3637AD]"

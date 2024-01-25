@@ -7,8 +7,7 @@ import LiveChat from "../../components/LiveChat/LiveChat";
 // import { Button } from "@material-tailwind/react";
 const HomePage = () => {
   // const channel = "talk2megooseman";
-  // const channel = "bobbypoffgaming";
-  const channel = "";
+  const channel = "bobbypoffgaming";
 
   return (
     <div className="flex flex-col w-full h-screen">

@@ -385,7 +385,7 @@ const Match = () => {
             className="w-[17px] md:w-[32px] h-auto"
             // style={{ width: "32px", height: "32px" }}
           ></img>
-          <p className="text-white text-xs md:text-sm">
+          <p className="text-white text-[10px] md:text-sm">
             Last <span className="text-[#7F7DF9]">7 seconds</span> to place the
             bet
           </p>
@@ -400,170 +400,344 @@ const Match = () => {
         </div>
       </header>
 
-      <section className="flex gap-5 flex-col-reverse lg:flex-row justify-between mt-5 md:h-[calc(100vh-120px)] overflow-auto">
-        <aside className="lg:h-[calc(100vh-120px)] lg:overflow-auto min-w-[320px] w-full lg:max-w-[320px] mx-auto lg:mx-0">
-          <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
-            <div className="flex flex-row justify-between">
-              <div className="flex flex-col">
-                <p className="text-white text-[32px] p-0">8</p>
-                <p className="text-[#F2F2F2] p-0">pabbles</p>
+      <section className="flex gap-5 flex-col-reverse lg:flex-row justify-between mt-5 md:h-[calc(100vh-60px)] overflow-hidden">
+        <aside className="lg:h-[calc(100vh-60px)] md:min-w-[320px] w-full lg:max-w-[320px] mx-auto lg:mx-0">
+          {matchId === "bet" ? (
+            <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-col">
+                  <p className="text-white text-[32px] p-0">8</p>
+                  <p className="text-[#F2F2F2] p-0">pabbles</p>
+                </div>
+
+                <div className="flex flex-col">
+                  <p className="text-[#F2F2F2]">Next</p>
+                  <p className="text-[#F2F2F2]">Betting in</p>
+                  <div className="flex flex-row">
+                    <img src="/icons/refresh.svg"></img>
+                    <p className="text-white">23:20:19</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-10 flex flex-row items-center gap-3">
+                <div className="h-[1px] bg-white w-16"></div>
+                <p className="text-white">Last Pabble Stat</p>
+                <div className="h-[1px] bg-white w-16"></div>
               </div>
 
-              <div className="flex flex-col">
-                <p className="text-[#F2F2F2]">Next</p>
-                <p className="text-[#F2F2F2]">Betting in</p>
-                <div className="flex flex-row">
-                  <img src="/icons/refresh.svg"></img>
-                  <p className="text-white">23:20:19</p>
+              <div className="flex flex-col mt-3 gap-3">
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">1</p>
+                  <img
+                    src="/icons/tokyo-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#EB5757] bg-opacity-20 text-[#EB5757] font-bold px-2 mr-3">
+                    Tokyo
+                  </p>
+                  <img
+                    src="/images/cup.png"
+                    style={{ width: "18px", height: "18px" }}
+                  ></img>
+                  <div className="flex-1" />
+                  <p
+                    className="text-white text-sm underline ml-3 cursor-pointer select-none"
+                    onClick={onViewState()}
+                  >
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">2</p>
+                  <img
+                    src="/icons/moscow-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#D7D7D7] bg-opacity-20 text-[#D7D7D7] font-bold px-2 mr-3">
+                    Moscow
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">3</p>
+                  <img
+                    src="/icons/cairo-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#634CF2] bg-opacity-20 text-[#634CF2] font-bold px-2 mr-3">
+                    Cairo
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">4</p>
+                  <img
+                    src="/icons/newyork-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#F2C94C] bg-opacity-20 text-[#F2C94C] font-bold px-2 mr-3">
+                    New York
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">5</p>
+                  <img
+                    src="/icons/capetown-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#BF2FED] bg-opacity-20 text-[#BF2FED] font-bold px-2 mr-3">
+                    Cape Town
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">6</p>
+                  <img
+                    src="/icons/riodejaneiro-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#2F80ED] bg-opacity-20 text-[#2F80ED] font-bold px-2 mr-3">
+                    Rio de Janeiro
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">7</p>
+                  <img
+                    src="/icons/paris-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#27AE60] bg-opacity-20 text-[#27AE60] font-bold px-2 mr-3">
+                    Paris
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">8</p>
+                  <img
+                    src="/icons/sydney-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#AE6027] bg-opacity-20 text-[#AE6027] font-bold px-2 mr-3">
+                    Sydney
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                    View stats
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="mt-10 flex flex-row items-center gap-3">
-              <div className="h-[1px] bg-white w-16"></div>
-              <p className="text-white">Last Pabble Stat</p>
-              <div className="h-[1px] bg-white w-16"></div>
-            </div>
+          ) : (
+            <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-col">
+                  <p className="text-white text-[32px] p-0">Harry</p>
+                  <p className="text-[#F2F2F2] p-0">pabbles</p>
+                </div>
 
-            <div className="flex flex-col mt-3 gap-3">
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">1</p>
-                <img
-                  src="/icons/tokyo-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#EB5757] bg-opacity-20 text-[#EB5757] font-bold px-2 mr-3">
-                  Tokyo
-                </p>
-                <img
-                  src="/images/cup.png"
-                  style={{ width: "18px", height: "18px" }}
-                ></img>
-                <div className="flex-1" />
-                <p
-                  className="text-white text-sm underline ml-3 cursor-pointer select-none"
-                  onClick={onViewState()}
+                <div className="flex flex-col">
+                  <p className="text-[#F2F2F2]">Next</p>
+                  <p className="text-[#F2F2F2]">Refresh in</p>
+                  <div className="flex flex-row">
+                    <img src="/icons/refresh.svg"></img>
+                    <p className="text-white">23:20:19</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-10 flex flex-row items-center justify-center">
+                <img src="/images/hary.png" alt="" />
+              </div>
+
+              <div className="mt-10">
+                <button
+                  className={clsx(
+                    "mr-2 mb-2 w-full font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#F27E4C] "
+                  )}
                 >
-                  View stats
-                </p>
+                  <h5>harry</h5>
+                  <p className="font-100">hamster</p>
+                </button>
               </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">2</p>
-                <img
-                  src="/icons/moscow-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#D7D7D7] bg-opacity-20 text-[#D7D7D7] font-bold px-2 mr-3">
-                  Moscow
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
+              <div className="mt-10 flex flex-row items-center gap-3">
+                <div className="h-[1px] bg-white w-16"></div>
+                <p className="text-white">Stat</p>
+                <div className="h-[1px] bg-white w-16"></div>
               </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">3</p>
-                <img
-                  src="/icons/cairo-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#634CF2] bg-opacity-20 text-[#634CF2] font-bold px-2 mr-3">
-                  Cairo
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
-              </div>
+              <div className="flex flex-col mt-3 gap-3">
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">1</p>
+                  <img
+                    src="/icons/tokyo-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#EB5757] bg-opacity-20 text-[#EB5757] font-bold px-2 mr-3">
+                    Tokyo
+                  </p>
+                  <img
+                    src="/images/cup.png"
+                    style={{ width: "18px", height: "18px" }}
+                  ></img>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">4</p>
-                <img
-                  src="/icons/newyork-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#F2C94C] bg-opacity-20 text-[#F2C94C] font-bold px-2 mr-3">
-                  New York
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
-              </div>
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">2</p>
+                  <img
+                    src="/icons/moscow-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#D7D7D7] bg-opacity-20 text-[#D7D7D7] font-bold px-2 mr-3">
+                    Moscow
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">5</p>
-                <img
-                  src="/icons/capetown-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#BF2FED] bg-opacity-20 text-[#BF2FED] font-bold px-2 mr-3">
-                  Cape Town
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
-              </div>
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">3</p>
+                  <img
+                    src="/icons/cairo-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#634CF2] bg-opacity-20 text-[#634CF2] font-bold px-2 mr-3">
+                    Cairo
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">6</p>
-                <img
-                  src="/icons/riodejaneiro-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#2F80ED] bg-opacity-20 text-[#2F80ED] font-bold px-2 mr-3">
-                  Rio de Janeiro
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
-              </div>
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">4</p>
+                  <img
+                    src="/icons/newyork-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#F2C94C] bg-opacity-20 text-[#F2C94C] font-bold px-2 mr-3">
+                    New York
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">7</p>
-                <img
-                  src="/icons/paris-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#27AE60] bg-opacity-20 text-[#27AE60] font-bold px-2 mr-3">
-                  Paris
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
-              </div>
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">5</p>
+                  <img
+                    src="/icons/capetown-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#BF2FED] bg-opacity-20 text-[#BF2FED] font-bold px-2 mr-3">
+                    Cape Town
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
 
-              <div className="flex flex-row items-center">
-                <p className="font-bold text-white mr-3">8</p>
-                <img
-                  src="/icons/sydney-circle.svg"
-                  style={{ width: "19px", height: "19px" }}
-                  className="mr-3"
-                ></img>
-                <p className="rounded-[13px] py-1 bg-[#AE6027] bg-opacity-20 text-[#AE6027] font-bold px-2 mr-3">
-                  Sydney
-                </p>
-                <div className="flex-1" />
-                <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
-                  View stats
-                </p>
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">6</p>
+                  <img
+                    src="/icons/riodejaneiro-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#2F80ED] bg-opacity-20 text-[#2F80ED] font-bold px-2 mr-3">
+                    Rio de Janeiro
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">7</p>
+                  <img
+                    src="/icons/paris-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#27AE60] bg-opacity-20 text-[#27AE60] font-bold px-2 mr-3">
+                    Paris
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
+
+                <div className="flex flex-row items-center">
+                  <p className="font-bold text-white mr-3">8</p>
+                  <img
+                    src="/icons/sydney-circle.svg"
+                    style={{ width: "19px", height: "19px" }}
+                    className="mr-3"
+                  ></img>
+                  <p className="rounded-[13px] py-1 bg-[#AE6027] bg-opacity-20 text-[#AE6027] font-bold px-2 mr-3">
+                    Sydney
+                  </p>
+                  <div className="flex-1" />
+                  <p className="text-white text-sm underline ml-3">
+                    View stats
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </aside>
 
-        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-120px)] lg:overflow-auto">
+        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-60px)] lg:overflow-auto">
           <main className="flex flex-col w-full">
             <ReactTwitchEmbedVideo
               layout="video"
@@ -574,9 +748,9 @@ const Match = () => {
             />
 
             {/* <img src="/images/video.png" className="h-[528px] w-[766px]"></img> */}
-            <div className="rounded-[12px] bg-[#7F7DF9] mt-5 px-6 py-3 flex flex-col justify-between w-full">
-              <div className="flex flex-row">
-                <div className="flex flex-col w-1/2">
+            <div className="rounded-[12px] bg-[#7F7DF9] mt-5 md:px-6 px-3 py-3 flex flex-col justify-between w-full">
+              <div className="flex flex-col md:flex-row">
+                <div className="flex flex-col md:w-1/2">
                   <p className="text-white">Choose your pebble to bet</p>
                   <div className="mt-2">
                     <button
@@ -664,25 +838,26 @@ const Match = () => {
 
                 <div className="w-[2px] bg-[#A2A1E5] mx-10 my-5"></div>
 
-                <div className="flex flex-col w-1/2">
+                <div className="flex flex-col md:w-1/2">
                   <p className="text-white">Enter your bet</p>
-                  <div className="flex flex-row mt-2">
+                  <div className="flex justify-between flex-row mt-2">
                     <div className="flex flex-row justify-center gap-2 items-center sol-input">
                       <div className="rounded-full bg-black p-1 h-fit">
                         <img
                           src="/images/solana.png"
-                          style={{ width: "24px", height: "24px" }}
+                          className="min-w-[24px] w-[24px] h-auto"
+                          //   style={{ width: "24px", height: "24px" }}
                         ></img>
                       </div>
                       <input
-                        className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent w-16 text-center"
+                        className="py-1 px-2 text-white font-bold text-2xl bg-transparent active:bg-transparent md:w-16 w-14 text-center"
                         value={solValue}
                         onChange={onInputSol}
                       ></input>
                       <p className="font-bold text-md text-white">sol</p>
                     </div>
 
-                    <div className="bg-white rounded-[16px] flex flex-row p-3 gap-3 ml-10">
+                    <div className="bg-white rounded-[16px] flex flex-row p-3 gap-3 md:ml-10 ml-5">
                       <img
                         onClick={onClickPlus}
                         className="cursor-pointer"
@@ -698,7 +873,7 @@ const Match = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-row mt-2 items-center">
+                  <div className="flex justify-between flex-row mt-2 items-center">
                     <img
                       src="/images/ion_wallet.png"
                       style={{ width: "30px", height: "30px" }}

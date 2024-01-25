@@ -103,7 +103,7 @@ export default function LiveChat() {
   if (screen === "chat") {
     return (
       <>
-        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative">
+        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 xl:min-w-[329px] xl:max-w-[329px] w-full relative">
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
             <h1 className="text-[20px] font-[500] select-none">Live Chat</h1>
             <div className="flex items-center gap-2 select-none">
@@ -184,9 +184,9 @@ export default function LiveChat() {
   } else {
     return (
       <>
-        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative">
+        <div className="bg-[#150C2A] rounded-[12px] pt-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative">
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
-            <h1 className="text-[20px] font-[500] select-none">Ranking</h1>
+            <h1 className="text-[20px] font-[500] select-none">Recent</h1>
             <div className="flex items-center gap-2 select-none">
               <div
                 className="w-[52px] h-[45px] rounded-[12px] bg-primary-gradient grid place-items-center cursor-pointer"
@@ -209,7 +209,32 @@ export default function LiveChat() {
             </div>
           </div>
 
-          rankings...
+          <div className="flex flex-col gap-3 max-h-[370px] overflow-auto">
+            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
+              <div className="">HWEO<sub className="text-lg">***</sub></div>
+              <div className="">23854</div>
+            </div>
+            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
+              <div className="">HWEO<sub className="text-lg">***</sub></div>
+              <div className="">23854</div>
+            </div>
+            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
+              <div className="">HWEO<sub className="text-lg">***</sub></div>
+              <div className="">23854</div>
+            </div>
+            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
+              <div className="">HWEO<sub className="text-lg">***</sub></div>
+              <div className="">23854</div>
+            </div>
+            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
+              <div className="">HWEO<sub className="text-lg">***</sub></div>
+              <div className="">23854</div>
+            </div>
+            <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
+              <div className="">HWEO<sub className="text-lg">***</sub></div>
+              <div className="">23854</div>
+            </div>
+          </div>
         </div>
       </>
     );

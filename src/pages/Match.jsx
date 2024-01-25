@@ -12,6 +12,37 @@ import { useRouter } from "../hooks/use-router";
 import { transferSol } from "../contract/bean";
 import LiveChat from "../components/LiveChat/LiveChat";
 
+const HEMSTARS = [
+  {
+    id: 1,
+    icon: "/icons/hem_blue.png",
+    name: "Peanut",
+    color: "#04E6EA",
+    winner: true,
+  },
+  {
+    id: 2,
+    icon: "/icons/hem_red.png",
+    name: "Luna",
+    color: "#CB031A",
+    winner: false,
+  },
+  {
+    id: 3,
+    icon: "/icons/hem_green.png",
+    name: "Oliver",
+    color: "#0EE520",
+    winner: false,
+  },
+  {
+    id: 4,
+    icon: "/icons/hem_yellow.png",
+    name: "Daisy",
+    color: "#F4BF04",
+    winner: false,
+  },
+];
+
 const Match = () => {
   const router = useRouter();
   const { matchId } = useParams();
@@ -32,7 +63,9 @@ const Match = () => {
   const [isSydney, onSydneyOrder] = useState(1);
   const [isCairo, onCairoOrder] = useState(1);
   const [isTokyo, onTokyoOrder] = useState(1);
-  const channel = "claraatwork";
+
+  const [selectedStat, setSelectedStat] = useState("");
+  const channel = "bobbypoffgaming";
 
   const initSetting = () => {
     fetch("https://coingateapi.com/api/init")
@@ -286,9 +319,11 @@ const Match = () => {
       .then((response) => response.text())
       .then((data) => {
         var data_t = JSON.parse(data);
-        alert("Pebble Detail Result: ", data_t); //, data_t.msg
+        // alert("Pebble Detail Result: ", data_t); //, data_t.msg
         // Do something with the response data
+        console.log("data, data_t");
         console.log(data);
+        console.log(data_t);
       })
       .catch((error) => {
         // Handle any errors
@@ -357,7 +392,7 @@ const Match = () => {
       .then((data) => {
         // Do something with the response data
         console.log(data);
-        alert("Set Winner/Sequence of pebbles Success!!!");
+        alert("Set Winner/Sequence of marbles Success!!!");
       })
       .catch((error) => {
         // Handle any errors
@@ -366,8 +401,8 @@ const Match = () => {
   };
 
   return (
-    <div className="flex flex-col w-full dh-full xl:p-10 p-5 lg:p-7 bg-gradient-to-bl from-[#0B021D] to-[#261A32] h-screen">
-      <header className="flex justify-between items-center max-h-[60px]">
+    <div className="flex flex-col w-full dh-full xl:p-10 p-5 lg:p-7 !pb-0 bg-gradient-to-bl from-[#0B021D] to-[#261A32] h-screen">
+      <header className="flex justify-between items-center h-[50px]">
         <div
           className="flex flex-row justify-center items-center cursor-pointer bg-[#383838] h-fit md:h-full py-3 md:px-5 px-3 gap-3 rounded-[12px] border-solid border-[1px] border-[#3637AD]"
           onClick={() => router.push("/")}
@@ -400,31 +435,34 @@ const Match = () => {
         </div>
       </header>
 
-      <section className="flex gap-5 flex-col-reverse lg:flex-row justify-between mt-5 md:h-[calc(100vh-60px)] overflow-hidden">
-        <aside className="lg:h-[calc(100vh-60px)] md:min-w-[320px] w-full lg:max-w-[320px] mx-auto lg:mx-0">
-          {matchId === "bet" ? (
-            <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-col">
-                  <p className="text-white text-[32px] p-0">8</p>
-                  <p className="text-[#F2F2F2] p-0">pabbles</p>
-                </div>
-
-                <div className="flex flex-col">
-                  <p className="text-[#F2F2F2]">Next</p>
-                  <p className="text-[#F2F2F2]">Betting in</p>
-                  <div className="flex flex-row">
-                    <img src="/icons/refresh.svg"></img>
-                    <p className="text-white">23:20:19</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-10 flex flex-row items-center gap-3">
-                <div className="h-[1px] bg-white w-16"></div>
-                <p className="text-white">Last Pabble Stat</p>
-                <div className="h-[1px] bg-white w-16"></div>
+      <section className="flex gap-5 flex-col-reverse lg:flex-row justify-between mt-5 md:h-[calc(100vh-60px)] md:overflow-hidden">
+        <aside className="lg:h-[calc(100vh-100px)] overflow-auto pb-4 md:min-w-[330px] w-full lg:max-w-[330px] mx-auto lg:mx-0">
+          <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-col">
+                <p className="text-white text-[32px] p-0">8</p>
+                <p className="text-[#F2F2F2] p-0">
+                  {matchId === "bet" ? "Marbles" : "Hemstars"}
+                </p>
               </div>
 
+              <div className="flex flex-col">
+                <p className="text-[#F2F2F2]">Next</p>
+                <p className="text-[#F2F2F2]">Betting in</p>
+                <div className="flex flex-row">
+                  <img src="/icons/refresh.svg"></img>
+                  <p className="text-white">23:20:19</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-10 flex flex-row items-center justify-center gap-3">
+              <div className="h-[1px] bg-white w-16"></div>
+              <p className="text-white">
+                Last {matchId === "bet" ? "Marble" : "Hemstars"} Stat
+              </p>
+              <div className="h-[1px] bg-white w-16"></div>
+            </div>
+            {matchId === "bet" ? (
               <div className="flex flex-col mt-3 gap-3">
                 <div className="flex flex-row items-center">
                   <p className="font-bold text-white mr-3">1</p>
@@ -433,7 +471,13 @@ const Match = () => {
                     style={{ width: "19px", height: "19px" }}
                     className="mr-3"
                   ></img>
-                  <p className="rounded-[13px] py-1 bg-[#EB5757] bg-opacity-20 text-[#EB5757] font-bold px-2 mr-3">
+                  <p
+                    className="rounded-[13px] py-1 bg-[#EB5757] bg-opacity-20 text-[#EB5757] font-bold px-2 mr-3"
+                    onClick={() => {
+                      onViewState(1);
+                      setSelectedStat("Tokyo");
+                    }}
+                  >
                     Tokyo
                   </p>
                   <img
@@ -443,7 +487,10 @@ const Match = () => {
                   <div className="flex-1" />
                   <p
                     className="text-white text-sm underline ml-3 cursor-pointer select-none"
-                    onClick={onViewState()}
+                    onClick={() => {
+                      onViewState(1);
+                      setSelectedStat("Tokyo");
+                    }}
                   >
                     View stats
                   </p>
@@ -536,11 +583,23 @@ const Match = () => {
                     style={{ width: "19px", height: "19px" }}
                     className="mr-3"
                   ></img>
-                  <p className="rounded-[13px] py-1 bg-[#27AE60] bg-opacity-20 text-[#27AE60] font-bold px-2 mr-3">
+                  <p
+                    className="rounded-[13px] py-1 bg-[#27AE60] bg-opacity-20 text-[#27AE60] font-bold px-2 mr-3"
+                    onClick={() => {
+                      onViewState(7);
+                      setSelectedStat("Paris");
+                    }}
+                  >
                     Paris
                   </p>
                   <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3 cursor-pointer select-none">
+                  <p
+                    className="text-white text-sm underline ml-3 cursor-pointer select-none"
+                    onClick={() => {
+                      onViewState(7);
+                      setSelectedStat("Paris");
+                    }}
+                  >
                     View stats
                   </p>
                 </div>
@@ -561,183 +620,141 @@ const Match = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-col">
-                  <p className="text-white text-[32px] p-0">Harry</p>
-                  <p className="text-[#F2F2F2] p-0">pabbles</p>
+            ) : (
+              <div className="flex flex-col mt-3 gap-3">
+                {HEMSTARS.map((item) => {
+                  return (
+                    <div
+                      key={`hemstars_${item.id}`}
+                      className="flex flex-row items-center"
+                    >
+                      <p className="font-bold text-white mr-3">{item.id}</p>
+                      <img
+                        src={item.icon}
+                        style={{ width: "19px", height: "19px" }}
+                        className="mr-3"
+                      ></img>
+                      <p
+                        className={`rounded-[13px] py-1 !bg-opacity-20 font-bold px-2 mr-3`}
+                        style={{
+                          backgroundColor: `${item.color}50`,
+                          color: item.color,
+                        }}
+                        onClick={() => {
+                          onViewState(item.id);
+                          setSelectedStat(item.name);
+                        }}
+                      >
+                        {item.name}
+                      </p>
+
+                      {item.winner && (
+                        <img
+                          src="/images/cup.png"
+                          style={{ width: "18px", height: "18px" }}
+                        ></img>
+                      )}
+                      <div className="flex-1" />
+
+                      <p
+                        className="text-white text-sm underline ml-3 cursor-pointer select-none"
+                        onClick={() => {
+                          onViewState(item.id);
+                          setSelectedStat(item.name);
+                        }}
+                      >
+                        View stats
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {selectedStat && (
+              <div className="">
+                <div className="mt-10 flex flex-row items-center justify-center gap-3">
+                  <div className="h-[1px] bg-white w-16"></div>
+                  <p className="text-white">Detailed Stat</p>
+                  <div className="h-[1px] bg-white w-16"></div>
                 </div>
 
-                <div className="flex flex-col">
-                  <p className="text-[#F2F2F2]">Next</p>
-                  <p className="text-[#F2F2F2]">Refresh in</p>
-                  <div className="flex flex-row">
-                    <img src="/icons/refresh.svg"></img>
-                    <p className="text-white">23:20:19</p>
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <img
+                    src={
+                      matchId === "bet"
+                        ? "/icons/marble_ball.png"
+                        : "/icons/hemstar_logo.png"
+                    }
+                    alt=""
+                    className=""
+                  />
+                  <div className="bg-[#27AE6033]/20 text-[#27AE60] rounded-[20px] h-[42px] min-w-[75px] px-4 shadow-[0px_0px_9.9px_0px_rgba(0,_0,_0,_0.30)] grid place-items-center text-[21px] font-bold">
+                    {selectedStat}
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 mt-6">
+                  <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center">
+                    <div className="">
+                      <div className="text-[10px]">Total Wins</div>
+                      <div className="font-bold text-xs">$20,012.68</div>
+                    </div>
+                    <img src="/images/graph.png" alt="" />
+                  </div>
+
+                  <div className="flex justify-between gap-2">
+                    <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center w-full">
+                      <div className="">
+                        <div className="text-[10px]">Highest bet</div>
+                        <div className="font-bold text-xs">$500</div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center w-full">
+                      <div className="">
+                        <div className="text-[10px]">Total Bets</div>
+                        <div className="font-bold text-xs">325</div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center w-full">
+                      <div className="">
+                        <div className="text-[10px]">Win Ratio</div>
+                        <div className="font-bold text-xs">0.8</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between gap-2">
+                    <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center w-full">
+                      <div className="">
+                        <div className="text-[10px]">Category</div>
+                        <div className="font-bold text-xs">$500</div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center w-full">
+                      <div className="">
+                        <div className="text-[10px]">Category</div>
+                        <div className="font-bold text-xs">325</div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[2px] bg-[#262626] p-3 flex justify-between items-center w-full">
+                      <div className="">
+                        <div className="text-[10px]">Category</div>
+                        <div className="font-bold text-xs">0.8</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="mt-10 flex flex-row items-center justify-center">
-                <img src="/images/hary.png" alt="" />
-              </div>
-
-              <div className="mt-10">
-                <button
-                  className={clsx(
-                    "mr-2 mb-2 w-full font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#F27E4C] "
-                  )}
-                >
-                  <h5>harry</h5>
-                  <p className="font-100">hamster</p>
-                </button>
-              </div>
-
-              <div className="mt-10 flex flex-row items-center gap-3">
-                <div className="h-[1px] bg-white w-16"></div>
-                <p className="text-white">Stat</p>
-                <div className="h-[1px] bg-white w-16"></div>
-              </div>
-
-              <div className="flex flex-col mt-3 gap-3">
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">1</p>
-                  <img
-                    src="/icons/tokyo-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#EB5757] bg-opacity-20 text-[#EB5757] font-bold px-2 mr-3">
-                    Tokyo
-                  </p>
-                  <img
-                    src="/images/cup.png"
-                    style={{ width: "18px", height: "18px" }}
-                  ></img>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">2</p>
-                  <img
-                    src="/icons/moscow-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#D7D7D7] bg-opacity-20 text-[#D7D7D7] font-bold px-2 mr-3">
-                    Moscow
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">3</p>
-                  <img
-                    src="/icons/cairo-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#634CF2] bg-opacity-20 text-[#634CF2] font-bold px-2 mr-3">
-                    Cairo
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">4</p>
-                  <img
-                    src="/icons/newyork-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#F2C94C] bg-opacity-20 text-[#F2C94C] font-bold px-2 mr-3">
-                    New York
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">5</p>
-                  <img
-                    src="/icons/capetown-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#BF2FED] bg-opacity-20 text-[#BF2FED] font-bold px-2 mr-3">
-                    Cape Town
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">6</p>
-                  <img
-                    src="/icons/riodejaneiro-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#2F80ED] bg-opacity-20 text-[#2F80ED] font-bold px-2 mr-3">
-                    Rio de Janeiro
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">7</p>
-                  <img
-                    src="/icons/paris-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#27AE60] bg-opacity-20 text-[#27AE60] font-bold px-2 mr-3">
-                    Paris
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-
-                <div className="flex flex-row items-center">
-                  <p className="font-bold text-white mr-3">8</p>
-                  <img
-                    src="/icons/sydney-circle.svg"
-                    style={{ width: "19px", height: "19px" }}
-                    className="mr-3"
-                  ></img>
-                  <p className="rounded-[13px] py-1 bg-[#AE6027] bg-opacity-20 text-[#AE6027] font-bold px-2 mr-3">
-                    Sydney
-                  </p>
-                  <div className="flex-1" />
-                  <p className="text-white text-sm underline ml-3">
-                    View stats
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </aside>
 
-        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-60px)] lg:overflow-auto">
+        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-100px)] pb-4 overflow-auto">
           <main className="flex flex-col w-full">
             <ReactTwitchEmbedVideo
               layout="video"
@@ -751,89 +768,113 @@ const Match = () => {
             <div className="rounded-[12px] bg-[#7F7DF9] mt-5 md:px-6 px-3 py-3 flex flex-col justify-between w-full">
               <div className="flex flex-col md:flex-row">
                 <div className="flex flex-col md:w-1/2">
-                  <p className="text-white">Choose your pebble to bet</p>
-                  <div className="mt-2">
-                    <button
-                      id="moscow"
-                      onClick={onMoscow}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b  from-[#4EAF90]",
-                        pebbleNumber === 1 ? "to-[#B2D5B2]" : " bg-black"
-                      )}
-                    >
-                      Moscow
-                    </button>
-                    <button
-                      id="newyork"
-                      onClick={onNewYork}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 2 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      New York
-                    </button>
-                    <button
-                      id="paris"
-                      onClick={onParis}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 3 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      Paris
-                    </button>
-                    <button
-                      id="captown"
-                      onClick={onCapTown}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 4 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      Cape Town
-                    </button>
-                    <button
-                      id="riodejaneiro"
-                      onClick={onRioDeJaneiro}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 5 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      Rio de Janeiro
-                    </button>
-                    <button
-                      id="sydney"
-                      onClick={onSydney}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 6 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      Sydney
-                    </button>
-                    <button
-                      id="cario"
-                      onClick={onCario}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 7 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      Cairo
-                    </button>
-                    <button
-                      id="tokyo"
-                      onClick={onTokyo}
-                      className={clsx(
-                        "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
-                        pebbleNumber === 8 ? " to-[#B2D5B2]" : "bg-black"
-                      )}
-                    >
-                      Tokyo
-                    </button>
-                  </div>
+                  <p className="text-white">Choose your marble to bet</p>
+                  {matchId === "bet" ? (
+                    <div className="mt-2">
+                      <button
+                        id="moscow"
+                        onClick={onMoscow}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b  from-[#4EAF90]",
+                          pebbleNumber === 1 ? "to-[#B2D5B2]" : " bg-black"
+                        )}
+                      >
+                        Moscow
+                      </button>
+                      <button
+                        id="newyork"
+                        onClick={onNewYork}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 2 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        New York
+                      </button>
+                      <button
+                        id="paris"
+                        onClick={onParis}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 3 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        Paris
+                      </button>
+                      <button
+                        id="captown"
+                        onClick={onCapTown}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 4 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        Cape Town
+                      </button>
+                      <button
+                        id="riodejaneiro"
+                        onClick={onRioDeJaneiro}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 5 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        Rio de Janeiro
+                      </button>
+                      <button
+                        id="sydney"
+                        onClick={onSydney}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 6 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        Sydney
+                      </button>
+                      <button
+                        id="cario"
+                        onClick={onCario}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 7 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        Cairo
+                      </button>
+                      <button
+                        id="tokyo"
+                        onClick={onTokyo}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b from-[#4EAF90]",
+                          pebbleNumber === 8 ? " to-[#B2D5B2]" : "bg-black"
+                        )}
+                      >
+                        Tokyo
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mt-2">
+                      {HEMSTARS.map((item) => {
+                        return (
+                          <button
+                            key={`choose_hemstar-${item.id}`}
+                            id={item.name}
+                            onClick={() => {
+                              setPebble(item.id);
+                            }}
+                            className={clsx(
+                              "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b  from-[#4EAF90]",
+                              pebbleNumber === item.id
+                                ? "to-[#B2D5B2]"
+                                : " bg-black"
+                            )}
+                          >
+                            {item.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 <div className="w-[2px] bg-[#A2A1E5] mx-10 my-5"></div>
@@ -930,9 +971,10 @@ const Match = () => {
                 </p>
               </div>
             </div>
+            <br />
           </main>
 
-          <aside className="1170:min-w-[329px] 1170:max-w-[329px]">
+          <aside className="xl:min-w-[329px] xl:max-w-[329px]">
             {isAdmin === true ? (
               <div className="flex flex-col ml-5">
                 <button

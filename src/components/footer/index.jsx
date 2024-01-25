@@ -2,7 +2,7 @@
 const Footer = () => {
   return (
     <div className="flex flex-col gap-3 lg:flex-row bg-[#0B021D] w-full py-12 px-16 justify-between items-center">
-      <img src="/icons/logo-footer.svg" style={{width: '138px', height: '42px'}} />
+      <img src="/images/logo2.png" style={{width: '138px', height: '42px'}} />
       <div className="flex flex-row justify-center items-center h-full">
         <p className="text-[#808181] text-base font-normal mr-16">Support</p>
         <p className="text-[#808181] text-base font-normal mr-16">Docs</p>

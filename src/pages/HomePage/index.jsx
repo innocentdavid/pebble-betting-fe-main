@@ -7,7 +7,8 @@ import LiveChat from "../../components/LiveChat/LiveChat";
 // import { Button } from "@material-tailwind/react";
 const HomePage = () => {
   // const channel = "talk2megooseman";
-  const channel = "claraatwork";
+  // const channel = "bobbypoffgaming";
+  const channel = "";
 
   return (
     <div className="flex flex-col w-full h-screen">
@@ -17,7 +18,13 @@ const HomePage = () => {
         </div>
         <div className="flex flex-col w-full bg-[#0B021D] h-screen overflow-auto">
           <div className="px-5 py-3 flex items-center justify-end">
-            <div className="text-white mr-3">Wallet</div>
+            <div className="text-white mr-3 flex items-center gap-1">
+              <img src="/icons/ion_wallet.png" alt="" />
+              <div className="">
+                Your <br />
+                Wallet
+              </div>
+            </div>
             <div className="flex items-center rounded-[12px] bg-[#303e34]">
               <div className="mr-[25px] ml-2 flex items-center">
                 <img src="/images/solana.png" alt="solana logo" />

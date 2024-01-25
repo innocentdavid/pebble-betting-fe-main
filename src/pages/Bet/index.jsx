@@ -331,7 +331,7 @@ const initSetting = () => {
       .then((data) => {
         // Do something with the response data
         console.log(data);
-        alert("Set Winner/Sequence of pebbles Success!!!")
+        alert("Set Winner/Sequence of marbles Success!!!")
       })
       .catch((error) => {
         // Handle any errors
@@ -363,7 +363,7 @@ const initSetting = () => {
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
               <p className="text-white text-[32px] p-0">8</p>
-              <p className="text-[#F2F2F2] p-0">pabbles</p>
+              <p className="text-[#F2F2F2] p-0">marbles</p>
             </div>
 
             <div className="flex flex-col">

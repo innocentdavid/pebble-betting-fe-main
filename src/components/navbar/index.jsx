@@ -2,14 +2,14 @@
 import { Button } from "@material-tailwind/react";
 import { useRouter } from "../../hooks/use-router";
 import { Link } from "react-router-dom";
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Navbar = () => {
   const router = useRouter();
   const wallet = useWallet();
 
   const getProvider = () => {
-    if ('phantom' in window) {
+    if ("phantom" in window) {
       const provider = window.phantom?.solana;
 
       if (provider?.isPhantom) {
@@ -17,7 +17,7 @@ const Navbar = () => {
       }
     }
 
-    window.open('https://phantom.app/', '_blank');
+    window.open("https://phantom.app/", "_blank");
   };
 
   const connectWallet = async () => {
@@ -25,36 +25,33 @@ const Navbar = () => {
     try {
       const resp = await provider.connect();
       console.log(resp.publicKey.toString());
-      // 26qv4GCcx98RihuK3c4T6ozB3J7L6VwCuFVc7Ta2A3Uo 
+      // 26qv4GCcx98RihuK3c4T6ozB3J7L6VwCuFVc7Ta2A3Uo
     } catch (err) {
       console.log(err);
       // { code: 4001, message: 'User rejected the request.' }
     }
-  }
+  };
 
   const toBetting = () => {
     if (wallet.connected) {
-      router.push('/bet');
-    }
-    else {
+      router.push("/bet");
+    } else {
       alert("Wallet is not connected!\n Please Connect your wallet!");
       return;
     }
-  }
+  };
 
   const toHamster = () => {
     if (wallet.connected) {
-      router.push('/harybet');
-    }
-    else {
+      router.push("/harybet");
+    } else {
       alert("Wallet is not connected!\n Please Connect your wallet!");
       return;
     }
-  }
-
+  };
 
   return (
-    <div className="pt-5 bg-gradient-to-t from-[#433466] to-[#231B4A] flex flex-col items-center h-full w-[280px]" >
+    <div className="pt-5 bg-gradient-to-t from-[#433466] to-[#231B4A] flex flex-col items-center h-full w-[280px]">
       {/* <WalletMultiButton /> */}
       <img src="/images/logo.png" width={105} height={31} className="mt-2" />
 
@@ -62,16 +59,29 @@ const Navbar = () => {
         <img src="/images/token-icon.svg" width={24} height={24}></img>
         <p className="text-white">1 GYPR - 0.3$</p>
       </div>
-      <Button className="rounded-[8px] bg-[#150C2A] mt-3 px-12 pt-3 pb-[14px] border border-[#4EAF90] capitalize text-base text-[#4EAF90]" onClick={connectWallet}>Buy Token</Button>
+      <Button
+        className="rounded-[8px] bg-[#150C2A] mt-3 px-12 pt-3 pb-[14px] border border-[#4EAF90] capitalize text-base text-[#4EAF90]"
+        onClick={connectWallet}
+      >
+        Buy Token
+      </Button>
 
       <div className="mt-10 px-8">
         <p className="text-white">Live Matches</p>
         <div className="w-full mr-10 flex flex-col dflex-row gap-3 mt-5">
-          <Link to={'/bet'}>
-            <img src="/images/match1.png" style={{ width: '119px', height: '125px' }} onClick={toBetting} className="cursor-pointer" />
+          <Link to={"/match/bet"}>
+            <img
+              src="/images/match1.png"
+              style={{ width: "119px", height: "125px" }}
+              // onClick={toBetting} className="cursor-pointer"
+            />
           </Link>
-          <Link to={'/harybet'}>
-            <img src="/images/match2.png" style={{ width: '119px', height: '125px' }} onClick={toHamster} className="cursor-pointer" />
+          <Link to={"/match/harybet"}>
+            <img
+              src="/images/match2.png"
+              style={{ width: "119px", height: "125px" }}
+              // onClick={toHamster} className="cursor-pointer"
+            />
           </Link>
           {/* <img src="/images/match3.png" style={{width: '119px', height: '125px'}}/>
             <img src="/images/match4.png" style={{width: '119px', height: '125px'}}/>
@@ -80,55 +90,74 @@ const Navbar = () => {
             <img src="/images/match7.png" style={{width: '119px', height: '125px'}}/>
             <img src="/images/match8.png" style={{width: '119px', height: '125px'}}/> */}
         </div>
-        <div className="">
-
-        </div>
+        <div className=""></div>
       </div>
 
       <div className="fixed bottom-0 pt-3 pb-6 px-8 backdrop-blur-sm bg-white/5 w-[calc(280px-60px)]">
-        <Button className="w-full text-black mb-3 capitalize text-base bg-primary-gradient">Buy Crypto</Button>
-        <img src="/images/credit_cards.svg" onClick={toBetting} className="cursor-pointer" />
+        <Button className="w-full text-black mb-3 capitalize text-base bg-primary-gradient">
+          Buy Crypto
+        </Button>
+        <img
+          src="/images/credit_cards.svg"
+          onClick={toBetting}
+          className="cursor-pointer"
+        />
       </div>
 
       <div className="hidden w-full mt-10">
         <div className="flex flex-row w-full justify-between cursor-pointer">
           <div className="flex flex-row justify-center items-center">
-            <img src="/images/live_stream.png" style={{ width: '22px', height: '22px' }} />
+            <img
+              src="/images/live_stream.png"
+              style={{ width: "22px", height: "22px" }}
+            />
             <p className="ml-2 text-[#858585] text-md">Live Stream</p>
           </div>
           <img src="/icons/chevron-right.svg" width={5} height={8} />
         </div>
         <div className="flex flex-row w-full justify-between cursor-pointer mt-4">
           <div className="flex flex-row justify-center items-center">
-            <img src="/images/stats.svg" style={{ width: '21px', height: '21px' }} />
+            <img
+              src="/images/stats.svg"
+              style={{ width: "21px", height: "21px" }}
+            />
             <p className="ml-2 text-[#858585] text-md">Stats</p>
           </div>
           <img src="/icons/chevron-right.svg" width={5} height={8} />
         </div>
         <div className="flex flex-row w-full justify-between cursor-pointer mt-4">
           <div className="flex flex-row justify-center items-center">
-            <img src="/images/staking.svg" style={{ width: '21px', height: '21px' }} />
+            <img
+              src="/images/staking.svg"
+              style={{ width: "21px", height: "21px" }}
+            />
             <p className="ml-2 text-[#858585] text-md">Staking</p>
           </div>
           <img src="/icons/chevron-right.svg" width={5} height={8} />
         </div>
         <div className="flex flex-row w-full justify-between cursor-pointer mt-4">
           <div className="flex flex-row justify-center items-center">
-            <img src="/images/referral.svg" style={{ width: '21px', height: '21px' }} />
+            <img
+              src="/images/referral.svg"
+              style={{ width: "21px", height: "21px" }}
+            />
             <p className="ml-2 text-[#858585] text-md">Referral</p>
           </div>
           <img src="/icons/chevron-right.svg" width={5} height={8} />
         </div>
         <div className="flex flex-row w-full justify-between cursor-pointer mt-4">
           <div className="flex flex-row justify-center items-center">
-            <img src="/images/analytics.svg" style={{ width: '21px', height: '21px' }} />
+            <img
+              src="/images/analytics.svg"
+              style={{ width: "21px", height: "21px" }}
+            />
             <p className="ml-2 text-[#858585] text-md">Analytics</p>
           </div>
           <img src="/icons/chevron-right.svg" width={5} height={8} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;

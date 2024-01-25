@@ -103,7 +103,7 @@ export default function LiveChat() {
   if (screen === "chat") {
     return (
       <>
-        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 min-w-[329px] max-w-[329px] relative">
+        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative">
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
             <h1 className="text-[20px] font-[500] select-none">Live Chat</h1>
             <div className="flex items-center gap-2 select-none">
@@ -184,7 +184,7 @@ export default function LiveChat() {
   } else {
     return (
       <>
-        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 min-w-[329px] max-w-[329px] relative">
+        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative">
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
             <h1 className="text-[20px] font-[500] select-none">Ranking</h1>
             <div className="flex items-center gap-2 select-none">
@@ -209,56 +209,7 @@ export default function LiveChat() {
             </div>
           </div>
 
-          <div
-            id="body"
-            ref={messagesColumnRef}
-            className="flex flex-col gap-3 max-h-[310px] overflow-auto"
-          >
-            {messagesRecieved.map((message, i) => {
-              // console.log("message");
-              // console.log(message);
-
-              if (message?.username) {
-                return (
-                  <div
-                    key={`message_${i}`}
-                    className="bg-[#0c031f] rounded-[6px] py-2 px-2"
-                  >
-                    <span className="font-bold">@{message.username}:</span>{" "}
-                    {message.message}
-                  </div>
-                );
-              }
-            })}
-          </div>
-
-          <form
-            className="absolute bottom-0 left-0 w-full z-10 px-4 pb-[16px] pt-5"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
-            <div className="flex items-center gap-2 h-[46px] bg-[#0c031f] w-full rounded-[6px] p-[5px]">
-              <input
-                className="w-full bg-transparent outline-none pl-2"
-                placeholder="Type something..."
-                value={message}
-                onChange={(e) => {
-                  setMessage(e.target.value);
-                }}
-              />
-              <button
-                type="submit"
-                className="w-[39.69px] h-[36px] rounded-[12px] bg-[#23183a] grid place-items-center cursor-pointer"
-              >
-                <img
-                  src={"/icons/send_btn.svg"}
-                  className="min-w-[15.67px] min-h-[15.67px]"
-                />
-              </button>
-            </div>
-          </form>
+          rankings...
         </div>
       </>
     );

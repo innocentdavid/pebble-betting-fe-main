@@ -131,7 +131,7 @@ export default function LiveChat() {
           <div
             id="body"
             ref={messagesColumnRef}
-            className="flex flex-col gap-3 max-h-[310px] overflow-auto"
+            className="flex flex-col gap-3 max-h-[310px] overflow-auto remove-scroll"
           >
             {messagesRecieved.map((message, i) => {
               // console.log("message");
@@ -209,7 +209,7 @@ export default function LiveChat() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 max-h-[370px] overflow-auto">
+          <div className="flex flex-col gap-3 max-h-[370px] overflow-auto remove-scroll">
             <div className="bg-[#0c031f] rounded-[6px] py-2 px-2 flex items-center justify-between">
               <div className="">HWEO<sub className="text-lg">***</sub></div>
               <div className="">23854</div>

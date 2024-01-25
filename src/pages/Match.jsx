@@ -496,7 +496,7 @@ const Match = () => {
       </header>
 
       <section className="flex gap-5 flex-col-reverse lg:flex-row justify-between mt-5 md:h-[calc(100vh-60px)] md:overflow-hidden">
-        <aside className="lg:h-[calc(100vh-100px)] overflow-auto pb-4 md:min-w-[330px] w-full lg:max-w-[330px] mx-auto lg:mx-0">
+        <aside className="lg:h-[calc(100vh-100px)] overflow-auto remove-scroll pb-4 md:min-w-[330px] w-full lg:max-w-[330px] mx-auto lg:mx-0">
           <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
             <div className="flex flex-row justify-between">
               <div className="flex flex-col">
@@ -828,7 +828,7 @@ const Match = () => {
           </div>
         </aside>
 
-        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-100px)] w-full pb-4 overflow-auto">
+        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-100px)] w-full pb-4 overflow-auto remove-scroll">
           <main className="flex flex-col w-full">
             <ReactTwitchEmbedVideo
               layout="video"

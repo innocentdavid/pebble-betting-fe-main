@@ -33,3 +33,12 @@ body {
     rgba(178, 213, 178, 1) 100%
   )!important;
 }
+
+.remove-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.remove-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 11 */
+}

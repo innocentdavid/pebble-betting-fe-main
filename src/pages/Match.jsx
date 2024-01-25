@@ -12,30 +12,79 @@ import { useRouter } from "../hooks/use-router";
 import { transferSol } from "../contract/bean";
 import LiveChat from "../components/LiveChat/LiveChat";
 
-const HEMSTARS = [
+const MARBLES = [
   {
-    id: 1,
-    icon: "/icons/hem_blue.png",
-    name: "Peanut",
-    color: "#04E6EA",
+    icon: "/icons/tokyo-circle.svg",
+    name: "Tokyo",
+    color: "#EB5757",
     winner: true,
   },
   {
-    id: 2,
+    icon: "/icons/moscow-circle.svg",
+    name: "Moscow",
+    color: "#D7D7D7",
+    winner: false,
+  },
+  {
+    icon: "/icons/cairo-circle.svg",
+    name: "Cairo",
+    color: "#634CF2",
+    winner: false,
+  },
+  {
+    icon: "/icons/newyork-circle.svg",
+    name: "New York",
+    color: "#F2C94C",
+    winner: false,
+  },
+  {
+    icon: "/icons/capetown-circle.svg",
+    name: "Cape Town",
+    color: "#BF2FED",
+    winner: false,
+  },
+  {
+    icon: "/icons/riodejaneiro-circle.svg",
+    name: "Rio de Janeiro",
+    color: "#2F80ED",
+    winner: false,
+  },
+  {
+    icon: "/icons/paris-circle.svg",
+    name: "Paris",
+    color: "#27AE60",
+    winner: false,
+  },
+  {
+    icon: "/icons/sydney-circle.svg",
+    name: "Sydney",
+    color: "#AE6027",
+    winner: false,
+  },
+];
+
+const HEMSTARS = [
+  {
     icon: "/icons/hem_red.png",
     name: "Luna",
     color: "#CB031A",
     winner: false,
   },
   {
-    id: 3,
     icon: "/icons/hem_green.png",
     name: "Oliver",
     color: "#0EE520",
     winner: false,
   },
   {
-    id: 4,
+    // id: 1,
+    icon: "/icons/hem_blue.png",
+    name: "Peanut",
+    color: "#04E6EA",
+    winner: true,
+  },
+  {
+    // id: 4,
     icon: "/icons/hem_yellow.png",
     name: "Daisy",
     color: "#F4BF04",
@@ -64,8 +113,19 @@ const Match = () => {
   const [isCairo, onCairoOrder] = useState(1);
   const [isTokyo, onTokyoOrder] = useState(1);
 
-  const [selectedStat, setSelectedStat] = useState("");
+  const [selectedStat, setSelectedStat] = useState(HEMSTARS[0]);
   const channel = "bobbypoffgaming";
+  const [itemsList, setItemsList] = useState([]);
+
+  useEffect(() => {
+    if (matchId === "bet") {
+      setItemsList(MARBLES);
+      setSelectedStat(MARBLES[0]);
+    } else {
+      setItemsList(HEMSTARS);
+      setSelectedStat(HEMSTARS[0]);
+    }
+  }, [matchId]);
 
   const initSetting = () => {
     fetch("https://coingateapi.com/api/init")
@@ -440,7 +500,9 @@ const Match = () => {
           <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
             <div className="flex flex-row justify-between">
               <div className="flex flex-col">
-                <p className="text-white text-[32px] p-0">8</p>
+                <p className="text-white text-[32px] p-0">
+                  {matchId === "bet" ? MARBLES.length : HEMSTARS.length}
+                </p>
                 <p className="text-[#F2F2F2] p-0">
                   {matchId === "bet" ? "Marbles" : "Hemstars"}
                 </p>
@@ -462,7 +524,7 @@ const Match = () => {
               </p>
               <div className="h-[1px] bg-white w-16"></div>
             </div>
-            {matchId === "bet" ? (
+            {/* {matchId === "bet" ? (
               <div className="flex flex-col mt-3 gap-3">
                 <div className="flex flex-row items-center">
                   <p className="font-bold text-white mr-3">1</p>
@@ -621,55 +683,60 @@ const Match = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col mt-3 gap-3">
-                {HEMSTARS.map((item) => {
-                  return (
-                    <div
-                      key={`hemstars_${item.id}`}
-                      className="flex flex-row items-center"
+            )} */}
+
+            <div className="flex flex-col mt-3 gap-3">
+              {itemsList.map((item, i) => {
+                return (
+                  <div
+                    key={`hemstars_${i + 1}`}
+                    className="flex flex-row items-center"
+                  >
+                    <p className="font-bold text-white mr-3">{i + 1}</p>
+                    <img
+                      src={item.icon}
+                      style={{ width: "19px", height: "19px" }}
+                      className="mr-3"
+                    ></img>
+                    <p
+                      className={`rounded-[13px] py-1 !bg-opacity-20 font-bold px-2 mr-3 cursor-pointer`}
+                      style={{
+                        backgroundColor: `${item.color}50`,
+                        color: item.color,
+                      }}
+                      onClick={() => {
+                        onViewState(i + 1);
+                        setSelectedStat(item);
+                      }}
                     >
-                      <p className="font-bold text-white mr-3">{item.id}</p>
+                      {item.name}
+                    </p>
+
+                    {item.winner && (
                       <img
-                        src={item.icon}
-                        style={{ width: "19px", height: "19px" }}
-                        className="mr-3"
+                        src="/images/cup.png"
+                        style={{ width: "18px", height: "18px" }}
                       ></img>
-                      <p
-                        className={`rounded-[13px] py-1 !bg-opacity-20 font-bold px-2 mr-3`}
-                        style={{
-                          backgroundColor: `${item.color}50`,
-                          color: item.color,
-                        }}
-                        onClick={() => {
-                          onViewState(item.id);
-                          setSelectedStat(item.name);
-                        }}
-                      >
-                        {item.name}
-                      </p>
+                    )}
+                    <div className="flex-1" />
 
-                      {item.winner && (
-                        <img
-                          src="/images/cup.png"
-                          style={{ width: "18px", height: "18px" }}
-                        ></img>
-                      )}
-                      <div className="flex-1" />
-
-                      <p
-                        className="text-white text-sm underline ml-3 cursor-pointer select-none"
-                        onClick={() => {
-                          onViewState(item.id);
-                          setSelectedStat(item.name);
-                        }}
-                      >
-                        View stats
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+                    <p
+                      className={`${
+                        selectedStat.name === item.name
+                          ? "text-white"
+                          : "text-gray-600"
+                      } text-sm underline ml-3 cursor-pointer select-none`}
+                      onClick={() => {
+                        onViewState(i + 1);
+                        setSelectedStat(item);
+                      }}
+                    >
+                      View stats
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
 
             {selectedStat && (
               <div className="">
@@ -680,17 +747,24 @@ const Match = () => {
                 </div>
 
                 <div className="flex items-center justify-center gap-2 mt-6">
-                  <img
+                <img src={selectedStat.icon} alt="" className="w-[60px] h-auto" />
+                  {/* <img
                     src={
                       matchId === "bet"
                         ? "/icons/marble_ball.png"
-                        : "/icons/hemstar_logo.png"
+                        : selectedStat.icon
                     }
                     alt=""
                     className=""
-                  />
-                  <div className="bg-[#27AE6033]/20 text-[#27AE60] rounded-[20px] h-[42px] min-w-[75px] px-4 shadow-[0px_0px_9.9px_0px_rgba(0,_0,_0,_0.30)] grid place-items-center text-[21px] font-bold">
-                    {selectedStat}
+                  /> */}
+                  <div
+                    className="rounded-[20px] h-[42px] min-w-[75px] px-4 shadow-[0px_0px_9.9px_0px_rgba(0,_0,_0,_0.30)] grid place-items-center text-[21px] font-bold"
+                    style={{
+                      backgroundColor: `${selectedStat.color}20`,
+                      color: `${selectedStat.color}`,
+                    }}
+                  >
+                    {selectedStat.name}
                   </div>
                 </div>
 
@@ -754,7 +828,7 @@ const Match = () => {
           </div>
         </aside>
 
-        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-100px)] pb-4 overflow-auto">
+        <div className="flex flex-col xl:flex-row gap-5 lg:h-[calc(100vh-100px)] w-full pb-4 overflow-auto">
           <main className="flex flex-col w-full">
             <ReactTwitchEmbedVideo
               layout="video"
@@ -765,7 +839,7 @@ const Match = () => {
             />
 
             {/* <img src="/images/video.png" className="h-[528px] w-[766px]"></img> */}
-            <div className="rounded-[12px] bg-[#7F7DF9] mt-5 md:px-6 px-3 py-3 flex flex-col justify-between w-full">
+            <div className="rounded-[12px] bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] mt-5 md:px-6 px-3 py-3 flex flex-col justify-between w-full">
               <div className="flex flex-col md:flex-row">
                 <div className="flex flex-col md:w-1/2">
                   <p className="text-white">Choose your marble to bet</p>
@@ -854,17 +928,17 @@ const Match = () => {
                     </div>
                   ) : (
                     <div className="mt-2">
-                      {HEMSTARS.map((item) => {
+                      {HEMSTARS.map((item, i) => {
                         return (
                           <button
-                            key={`choose_hemstar-${item.id}`}
+                            key={`choose_hemstar-${i + 1}`}
                             id={item.name}
                             onClick={() => {
-                              setPebble(item.id);
+                              setPebble(i + 1);
                             }}
                             className={clsx(
                               "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b  from-[#4EAF90]",
-                              pebbleNumber === item.id
+                              pebbleNumber === i + 1
                                 ? "to-[#B2D5B2]"
                                 : " bg-black"
                             )}

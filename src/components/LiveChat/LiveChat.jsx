@@ -103,7 +103,7 @@ export default function LiveChat() {
   if (screen === "chat") {
     return (
       <>
-        <div className="bg-[#150C2A] rounded-[12px] py-[calc(65px+20px)] px-4 xl:min-w-[329px] xl:max-w-[329px] w-full relative">
+        <div className="bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[12px] py-[calc(65px+20px)] px-4 xl:min-w-[329px] xl:max-w-[329px] w-full relative min-h-[calc(100vh-110px)]">
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
             <h1 className="text-[20px] font-[500] select-none">Live Chat</h1>
             <div className="flex items-center gap-2 select-none">
@@ -184,7 +184,7 @@ export default function LiveChat() {
   } else {
     return (
       <>
-        <div className="bg-[#150C2A] rounded-[12px] pt-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative">
+        <div className="bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[12px] pt-[calc(65px+20px)] px-4 1170:min-w-[329px] 1170:max-w-[329px] relative min-h-[calc(100vh-110px)]">
           <div className="h-[65px] flex items-center justify-between absolute top-0 left-0 w-full z-10 px-4">
             <h1 className="text-[20px] font-[500] select-none">Recent</h1>
             <div className="flex items-center gap-2 select-none">

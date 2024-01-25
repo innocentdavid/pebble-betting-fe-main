@@ -51,7 +51,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="pt-5 bg-gradient-to-t from-[#433466] to-[#231B4A] flex flex-col items-center h-full w-[280px]">
+    // <div className="pt-5 bg-gradient-to-t from-[#433466] to-[#231B4A] flex flex-col items-center h-full w-[280px]">
+      <div className="pt-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] flex flex-col items-center h-full w-[280px]">
       {/* <WalletMultiButton /> */}
       <img src="/images/logo.svg" width={70} height={31} className="mt-2" />
 

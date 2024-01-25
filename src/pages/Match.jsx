@@ -172,7 +172,18 @@ const Match = () => {
           console.log(data_t.msg.bettingFlag);
           const bettingFlag = data_t.msg.bettingFlag;
           const last_sequence = data_t.msg.last_vetting_result;
-          // const newList =
+
+          const sortedArray = last_sequence
+            .map((name, index) => ({ name, index }))
+            .filter((item) => item.name !== "") // Remove empty strings
+            .sort(
+              (a, b) =>
+                last_sequence.indexOf(a.name) - last_sequence.indexOf(b.name)
+            )
+            .map((item) => itemsList.find((obj) => obj.name === item.name));
+
+          console.log(sortedArray);
+
           console.log(last_sequence[5]);
           onMoscowOrder(last_sequence[0]);
           onNewYorkOrder(last_sequence[1]);
@@ -189,7 +200,7 @@ const Match = () => {
           console.error(error);
         });
     };
-    
+
     initSetting();
   }, [matchId]);
 
@@ -233,31 +244,31 @@ const Match = () => {
     setSolValue(e.target.value);
   };
 
-  const onMoscow = () => {
-    console.log(pebbleNumber);
-    setPebble(1);
-  };
-  const onNewYork = () => {
-    setPebble(2);
-  };
-  const onParis = () => {
-    setPebble(3);
-  };
-  const onCapTown = () => {
-    setPebble(4);
-  };
-  const onRioDeJaneiro = () => {
-    setPebble(5);
-  };
-  const onSydney = () => {
-    setPebble(6);
-  };
-  const onCario = () => {
-    setPebble(7);
-  };
-  const onTokyo = () => {
-    setPebble(8);
-  };
+  // const onMoscow = () => {
+  //   console.log(pebbleNumber);
+  //   setPebble(1);
+  // };
+  // const onNewYork = () => {
+  //   setPebble(2);
+  // };
+  // const onParis = () => {
+  //   setPebble(3);
+  // };
+  // const onCapTown = () => {
+  //   setPebble(4);
+  // };
+  // const onRioDeJaneiro = () => {
+  //   setPebble(5);
+  // };
+  // const onSydney = () => {
+  //   setPebble(6);
+  // };
+  // const onCario = () => {
+  //   setPebble(7);
+  // };
+  // const onTokyo = () => {
+  //   setPebble(8);
+  // };
 
   const onClickPlus = () => {
     let curValue;
@@ -547,9 +558,7 @@ const Match = () => {
           <div className="flex flex-col p-5 bg-gradient-to-br from-[#52545A] via-[#373C48] to-[#272E3E] rounded-[18px] h-fit">
             <div className="flex flex-row justify-between">
               <div className="flex flex-col">
-                <p className="text-white text-[32px] p-0">
-                  {matchId === "bet" ? MARBLES.length : HEMSTARS.length}
-                </p>
+                <p className="text-white text-[32px] p-0">{itemsList.length}</p>
                 <p className="text-[#F2F2F2] p-0">
                   {matchId === "bet" ? "Marbles" : "Hemstars"}
                 </p>
@@ -897,7 +906,7 @@ const Match = () => {
               <div className="flex flex-col md:flex-row">
                 <div className="flex flex-col md:w-1/2">
                   <p className="text-white">Choose your marble to bet</p>
-                  {matchId === "bet" ? (
+                  {/* {matchId === "bet" ? (
                     <div className="mt-2">
                       <button
                         id="moscow"
@@ -1002,7 +1011,24 @@ const Match = () => {
                         );
                       })}
                     </div>
-                  )}
+                  )} */}
+                  {itemsList.map((item, i) => {
+                    return (
+                      <button
+                        key={`choose_hemstar-${i + 1}`}
+                        id={item.name}
+                        onClick={() => {
+                          setPebble(i + 1);
+                        }}
+                        className={clsx(
+                          "mr-2 mb-2 font-bold rounded-[12px] px-2 py-1 text-white bg-gradient-to-b  from-[#4EAF90]",
+                          pebbleNumber === i + 1 ? "to-[#B2D5B2]" : " bg-black"
+                        )}
+                      >
+                        {item.name}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 <div className="w-[2px] bg-[#A2A1E5] ml-2 mr-4 my-5"></div>

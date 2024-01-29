@@ -119,7 +119,8 @@ const Match = () => {
 
   const [selectedStat, setSelectedStat] = useState(HEMSTARS[0]);
   const [statDetails, setStatDetails] = useState(null);
-  const channel = "bobbypoffgaming";
+  // const channel = "bobbypoffgaming";
+  const channel = "";
   const [itemsList, setItemsList] = useState([]);
   const [showRightSideBar, setShowRightSideBar] = useState(true);
 
@@ -138,8 +139,8 @@ const Match = () => {
         }
       } catch (error) {
         console.log(error.message);
-        console.log(error);
-        console.log(error.message);
+        // console.log(error);
+        // console.log(error.message);
       }
     };
     fetch();
@@ -161,48 +162,61 @@ const Match = () => {
 
   useEffect(() => {
     const initSetting = () => {
-      const url = `https://coingateapi.com/api/init/${matchId}`;
-      fetch(url)
-        .then((response) => response.text())
-        .then((data) => {
-          // Do something with the response data
-          console.log(data);
-          const data_t = JSON.parse(data);
-          console.log(data_t);
-          console.log(data_t.msg.bettingFlag);
-          const bettingFlag = data_t.msg.bettingFlag;
-          const last_sequence = data_t.msg.last_vetting_result;
+      const url = `https://coingateapi.com/api/init?query=${matchId}`;
+      const f = async () => {
+        var newList = [];
+        await fetch(url)
+          .then((response) => response.text())
+          .then((data) => {
+            // Do something with the response data
+            // console.log(data);
+            const data_t = JSON.parse(data);
+            console.log(data_t);
+            const bettingFlagKey = `betting_${
+              matchId === "harybet" ? "hamster" : "marble"
+            }_Flag`;
+            const bettingFlag = data_t.msg[bettingFlagKey];
+            const last_sequence = data_t.msg.last_betting_result;
+            const sortedArray = last_sequence
+              .map((name, index) => ({ name, index }))
+              .filter((item) => item.name !== "") // Remove empty strings
+              .sort(
+                (a, b) =>
+                  last_sequence.indexOf(a.name) - last_sequence.indexOf(b.name)
+              )
+              ?.map((item) => itemsList.find((obj) => obj.name === item.name));
+            if (sortedArray?.[0]?.icon) {
+              // console.log("sortedArray");
+              // console.log(sortedArray);
+              newList = sortedArray;
+              setItemsList(sortedArray)
 
-          const sortedArray = last_sequence
-            .map((name, index) => ({ name, index }))
-            .filter((item) => item.name !== "") // Remove empty strings
-            .sort(
-              (a, b) =>
-                last_sequence.indexOf(a.name) - last_sequence.indexOf(b.name)
-            )
-            .map((item) => itemsList.find((obj) => obj.name === item.name));
+              // console.log(last_sequence[5]);
+              onMoscowOrder(last_sequence[0]);
+              onNewYorkOrder(last_sequence[1]);
+              onParisOrder(last_sequence[2]);
+              onCapeTownOrder(last_sequence[3]);
+              onRiodeJaneiroOrder(last_sequence[4]);
+              onSydneyOrder(last_sequence[5]);
+              onCairoOrder(last_sequence[6]);
+              onTokyoOrder(last_sequence[7]);
+              setOnBetting(bettingFlag);
+            }
+          })
+          .catch((error) => {
+            // Handle any errors
+            console.error(error.message);
+          });
+          console.log("newList");
+          console.log(newList);
+          newList.length>0 && setItemsList(newList)
+      };
+      f();
 
-          console.log(sortedArray);
-
-          console.log(last_sequence[5]);
-          onMoscowOrder(last_sequence[0]);
-          onNewYorkOrder(last_sequence[1]);
-          onParisOrder(last_sequence[2]);
-          onCapeTownOrder(last_sequence[3]);
-          onRiodeJaneiroOrder(last_sequence[4]);
-          onSydneyOrder(last_sequence[5]);
-          onCairoOrder(last_sequence[6]);
-          onTokyoOrder(last_sequence[7]);
-          setOnBetting(bettingFlag);
-        })
-        .catch((error) => {
-          // Handle any errors
-          console.error(error);
-        });
     };
 
     initSetting();
-  }, [matchId]);
+  }, [itemsList, matchId]);
 
   const PEBBLE_RACE = 8;
   //   let lamportBalance = 10;
@@ -768,7 +782,7 @@ const Match = () => {
                       {item.name}
                     </p>
 
-                    {item.winner && (
+                    {i === 0 && (
                       <img
                         src="/images/cup.png"
                         style={{ width: "18px", height: "18px" }}

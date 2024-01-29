@@ -1,12 +1,11 @@
-// import axios from "axios";
-import { Button } from "@material-tailwind/react";
-import { useEffect, useRef, useState } from "react";
-import { FaTimes } from "react-icons/fa";
-import io from "socket.io-client";
 
-const socket = io.connect(
-  "https://fuzzy-robot-j479479wx74hp9-3000.app.github.dev"
-);
+// import { Button } from "@material-tailwind/react";
+import { useEffect, useRef, useState } from "react";
+// import { FaTimes } from "react-icons/fa";
+import io from "socket.io-client";
+import { BASE_URL } from "../../config";
+
+const socket = io.connect(BASE_URL);
 const username = "dev_cent";
 const room = "main";
 
@@ -28,14 +27,11 @@ export default function LiveChat() {
 
     // const ping = async () => {
     //   try {
-    //     const res = await axios.post(
-    //       "https://fuzzy-robot-j479479wx74hp9-3000.app.github.dev",
-    //       {}
-    //     );
-    //     console.log("res");
+    //     const res = await axios.post(`${BASE_URL}/ping`);
+    //     console.log("ping res");
     //     console.log(res);
     //   } catch (error) {
-    //     console.log("error");
+    //     console.log("ping error");
     //     console.log(error);
     //   }
     // };

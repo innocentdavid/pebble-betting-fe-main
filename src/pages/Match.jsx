@@ -37,19 +37,19 @@ const MARBLES = [
   },
   {
     icon: "/icons/newyork-circle.svg",
-    name: "New York",
+    name: "NewYork",
     color: "#F2C94C",
     winner: false,
   },
   {
     icon: "/icons/capetown-circle.svg",
-    name: "Cape Town",
+    name: "CapeTown",
     color: "#BF2FED",
     winner: false,
   },
   {
     icon: "/icons/riodejaneiro-circle.svg",
-    name: "Rio de Janeiro",
+    name: "RiodeJaneiro",
     color: "#2F80ED",
     winner: false,
   },
@@ -177,19 +177,24 @@ const Match = () => {
           }_Flag`;
           const bettingFlag = data_t.msg[bettingFlagKey];
           const last_sequence = data_t.msg.last_betting_result;
+          console.log("last_sequence");
+          console.log(last_sequence);
+          console.log("itemsList");
+          console.log(itemsList);
           const sortedArray = last_sequence
             .map((name, index) => ({ name, index }))
-            .filter((item) => item.name !== "") // Remove empty strings
+            .filter((item) => item?.name !== "") // Remove empty strings
             .sort(
               (a, b) =>
                 last_sequence.indexOf(a.name) - last_sequence.indexOf(b.name)
             )
-            ?.map((item) => itemsList.find((obj) => obj.name === item.name));
+            ?.map((item) => itemsList.find((obj) => obj.name === item?.name));
           if (sortedArray?.[0]?.icon) {
             // console.log("sortedArray");
             // console.log(sortedArray);
             // newList = sortedArray;
             setItemsList(sortedArray);
+            setSelectedStat(sortedArray[0])
             setHasFiltered(true);
 
             // console.log(last_sequence[5]);
@@ -240,7 +245,7 @@ const Match = () => {
       setWalletBalance(balance1 / LAMPORTS_PER_SOL);
     } catch (error) {
       // Handle errors appropriately
-      console.error("Error fetching balance:", error);
+      console.error("Error fetching balance:", error.message);
     }
   }, [connection, wallet]);
 
@@ -766,15 +771,15 @@ const Match = () => {
                     <p
                       className={`rounded-[13px] py-1 !bg-opacity-20 font-bold px-2 mr-3 cursor-pointer`}
                       style={{
-                        backgroundColor: `${item.color}50`,
-                        color: item.color,
+                        backgroundColor: `${item?.color}50`,
+                        color: item?.color,
                       }}
                       onClick={() => {
                         onViewState(i + 1);
                         setSelectedStat(item);
                       }}
                     >
-                      {item.name}
+                      {item?.name}
                     </p>
 
                     {i === 0 && (
@@ -787,7 +792,7 @@ const Match = () => {
 
                     <p
                       className={`${
-                        selectedStat.name === item.name
+                        selectedStat.name === item?.name
                           ? "text-white"
                           : "text-gray-600"
                       } text-sm underline ml-3 cursor-pointer select-none`}
@@ -832,8 +837,8 @@ const Match = () => {
                   <div
                     className="rounded-[20px] h-[42px] min-w-[75px] px-4 shadow-[0px_0px_9.9px_0px_rgba(0,_0,_0,_0.30)] grid place-items-center text-[21px] font-bold"
                     style={{
-                      backgroundColor: `${selectedStat.color}20`,
-                      color: `${selectedStat.color}`,
+                      backgroundColor: `${selectedStat?.color}20`,
+                      color: `${selectedStat?.color}`,
                     }}
                   >
                     {selectedStat.name}
@@ -1004,7 +1009,7 @@ const Match = () => {
                         return (
                           <button
                             key={`choose_hemstar-${i + 1}`}
-                            id={item.name}
+                            id={item?.name}
                             onClick={() => {
                               setPebble(i + 1);
                             }}
@@ -1015,7 +1020,7 @@ const Match = () => {
                                 : " bg-black"
                             )}
                           >
-                            {item.name}
+                            {item?.name}
                           </button>
                         );
                       })}
@@ -1025,7 +1030,7 @@ const Match = () => {
                     return (
                       <button
                         key={`choose_hemstar-${i + 1}`}
-                        id={item.name}
+                        id={item?.name}
                         onClick={() => {
                           setPebble(i + 1);
                         }}
@@ -1034,7 +1039,7 @@ const Match = () => {
                           pebbleNumber === i + 1 ? "to-[#B2D5B2]" : " bg-black"
                         )}
                       >
-                        {item.name}
+                        {item?.name}
                       </button>
                     );
                   })}

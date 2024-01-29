@@ -37,11 +37,11 @@ const HomePage = () => {
                 className="cursor-pointer"
               />
             </div>
-            <div className="px-5 py-3 flex items-center justify-end">
+            <div className="px-5 py-3 flex items-center justify-end w-full">
               <div className="hidden text-white mr-3 md:flex items-center gap-1">
                 <img src="/icons/ion_wallet.png" alt="" />
                 <div className="">
-                  Your <br />
+                  Your <br className="lg:hidden" />
                   Wallet
                 </div>
               </div>

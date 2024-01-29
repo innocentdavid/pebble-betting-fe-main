@@ -23,7 +23,7 @@ const HomePage = () => {
             <div className="absolute top-0 left-0 w-full h-screen bg-black/60 cursor-pointer" onClick={() => {
                   setShowMobileMenu(false);
                 }}></div>
-            <div className="absolute top-0 left-0">
+            <div className="absolute top-0 left-0 z-[9999]">
               <Navbar />
             </div>
           </div>}
@@ -38,7 +38,7 @@ const HomePage = () => {
               />
             </div>
             <div className="px-5 py-3 flex items-center justify-end">
-              <div className="text-white mr-3 flex items-center gap-1">
+              <div className="hidden text-white mr-3 md:flex items-center gap-1">
                 <img src="/icons/ion_wallet.png" alt="" />
                 <div className="">
                   Your <br />

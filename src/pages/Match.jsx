@@ -165,7 +165,6 @@ const Match = () => {
     if (hasFiltered) return;
     const initSetting = async () => {
       const url = `https://coingateapi.com/api/init?query=${matchId}`;
-      var newList = [];
       await fetch(url)
         .then((response) => response.text())
         .then((data) => {
@@ -209,13 +208,10 @@ const Match = () => {
           // Handle any errors
           console.error(error.message);
         });
-      console.log("newList");
-      console.log(newList);
-      newList.length > 0 && setItemsList(newList);
     };
 
     initSetting();
-  }, [itemsList, matchId]);
+  }, [hasFiltered, itemsList, matchId]);
 
   const PEBBLE_RACE = 8;
   //   let lamportBalance = 10;

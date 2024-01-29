@@ -160,59 +160,58 @@ const Match = () => {
     console.log(matchId);
   }, [matchId]);
 
+  const [hasFiltered, setHasFiltered] = useState(false);
   useEffect(() => {
-    const initSetting = () => {
+    if (hasFiltered) return;
+    const initSetting = async () => {
       const url = `https://coingateapi.com/api/init?query=${matchId}`;
-      const f = async () => {
-        var newList = [];
-        await fetch(url)
-          .then((response) => response.text())
-          .then((data) => {
-            // Do something with the response data
-            // console.log(data);
-            const data_t = JSON.parse(data);
-            console.log(data_t);
-            const bettingFlagKey = `betting_${
-              matchId === "harybet" ? "hamster" : "marble"
-            }_Flag`;
-            const bettingFlag = data_t.msg[bettingFlagKey];
-            const last_sequence = data_t.msg.last_betting_result;
-            const sortedArray = last_sequence
-              .map((name, index) => ({ name, index }))
-              .filter((item) => item.name !== "") // Remove empty strings
-              .sort(
-                (a, b) =>
-                  last_sequence.indexOf(a.name) - last_sequence.indexOf(b.name)
-              )
-              ?.map((item) => itemsList.find((obj) => obj.name === item.name));
-            if (sortedArray?.[0]?.icon) {
-              // console.log("sortedArray");
-              // console.log(sortedArray);
-              newList = sortedArray;
-              setItemsList(sortedArray)
+      var newList = [];
+      await fetch(url)
+        .then((response) => response.text())
+        .then((data) => {
+          // Do something with the response data
+          // console.log(data);
+          const data_t = JSON.parse(data);
+          console.log(data_t);
+          const bettingFlagKey = `betting_${
+            matchId === "harybet" ? "hamster" : "marble"
+          }_Flag`;
+          const bettingFlag = data_t.msg[bettingFlagKey];
+          const last_sequence = data_t.msg.last_betting_result;
+          const sortedArray = last_sequence
+            .map((name, index) => ({ name, index }))
+            .filter((item) => item.name !== "") // Remove empty strings
+            .sort(
+              (a, b) =>
+                last_sequence.indexOf(a.name) - last_sequence.indexOf(b.name)
+            )
+            ?.map((item) => itemsList.find((obj) => obj.name === item.name));
+          if (sortedArray?.[0]?.icon) {
+            // console.log("sortedArray");
+            // console.log(sortedArray);
+            // newList = sortedArray;
+            setItemsList(sortedArray);
+            setHasFiltered(true);
 
-              // console.log(last_sequence[5]);
-              onMoscowOrder(last_sequence[0]);
-              onNewYorkOrder(last_sequence[1]);
-              onParisOrder(last_sequence[2]);
-              onCapeTownOrder(last_sequence[3]);
-              onRiodeJaneiroOrder(last_sequence[4]);
-              onSydneyOrder(last_sequence[5]);
-              onCairoOrder(last_sequence[6]);
-              onTokyoOrder(last_sequence[7]);
-              setOnBetting(bettingFlag);
-            }
-          })
-          .catch((error) => {
-            // Handle any errors
-            console.error(error.message);
-          });
-          console.log("newList");
-          console.log(newList);
-          newList.length>0 && setItemsList(newList)
-      };
-      f();
-
+            // console.log(last_sequence[5]);
+            onMoscowOrder(last_sequence[0]);
+            onNewYorkOrder(last_sequence[1]);
+            onParisOrder(last_sequence[2]);
+            onCapeTownOrder(last_sequence[3]);
+            onRiodeJaneiroOrder(last_sequence[4]);
+            onSydneyOrder(last_sequence[5]);
+            onCairoOrder(last_sequence[6]);
+            onTokyoOrder(last_sequence[7]);
+            setOnBetting(bettingFlag);
+          }
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error.message);
+        });
+      console.log("newList");
+      console.log(newList);
+      newList.length > 0 && setItemsList(newList);
     };
 
     initSetting();
@@ -764,7 +763,7 @@ const Match = () => {
                   >
                     <p className="font-bold text-white mr-3">{i + 1}</p>
                     <img
-                      src={item.icon}
+                      src={item?.icon}
                       style={{ width: "19px", height: "19px" }}
                       className="mr-3"
                     ></img>
@@ -821,7 +820,7 @@ const Match = () => {
 
                 <div className="flex items-center justify-center gap-2 mt-6">
                   <img
-                    src={selectedStat.icon}
+                    src={selectedStat?.icon}
                     alt=""
                     className="w-[60px] h-auto"
                   />

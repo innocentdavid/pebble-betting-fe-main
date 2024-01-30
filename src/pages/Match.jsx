@@ -813,9 +813,9 @@ const Match = () => {
                 <div className="mt-10 flex flex-row items-center justify-center gap-3">
                   <div className="h-[1px] bg-white w-16"></div>
                   <p className="text-white">Detailed Stat</p>
-                  <p className="text-xs text-red-600">
+                  {/* <p className="text-xs text-red-600">
                     {!statDetails && "failed to fetch details"}
-                  </p>
+                  </p> */}
                   <div className="h-[1px] bg-white w-16"></div>
                 </div>
 
